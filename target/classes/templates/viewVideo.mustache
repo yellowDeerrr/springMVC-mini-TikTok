@@ -3,14 +3,20 @@
 <head>
     <title>Watch video name account {{accountName}}</title>
     <style>
-        img {
+        #video {
             border: 2px solid #FFFFFF;
             border-radius: 10%;
-            width: 155px;
-            height: 155px;
+            width: 200px;
+            height: 200px;
         }
         body{
             background-color: cornflowerblue;
+        }
+        #avatar{
+            border: 2px solid #FFFFFF;
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
         }
     </style>
 </head>
@@ -19,9 +25,9 @@
 
 <p>Account Name: {{accountName}}</p>
 <p>Video ID: {{idVideo}}</p>
-
-<img src="http://localhost:8080/tiktok/@{{accountName}}/video/{{idVideo}}.png" alt="Error">
-<h3>Likes: {{likes}}</h3>
+<img src="http://localhost:8080/tiktok/@{{accountName}}/photo/{{photoId}}" alt="Error" id="avatar">
+<img src="http://localhost:8080/tiktok/@{{accountName}}/video/{{idVideo}}" alt="Error" id="video">
+<h3>Likes: {{like}}</h3>
 <form method="get" action="/foryou">
     <input type="submit" value="Next video">
 </form>

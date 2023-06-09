@@ -8,8 +8,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Timestamp;
+import java.util.Random;
 
 @Controller
 public class CreateAccountController {
@@ -21,16 +27,47 @@ public class CreateAccountController {
     }
 
     @PostMapping("/CreateAccount")
-    public String createAccount(@RequestParam String login, @RequestParam String password, Model model){
+    public String createAccount(@RequestParam String login, @RequestParam String password, @RequestParam MultipartFile file, Model model) throws IOException {
         UsersAccount usersAccount = usersAccountRepository.findByLogin(login);
         if (usersAccount == null){
-            model.addAttribute("message", "Successful");
-            UsersAccount createUser = new UsersAccount(login, password, new Timestamp(System.currentTimeMillis()));
-            usersAccountRepository.save(createUser);
+            String generate = generatePhotoId();
+            if (usersAccountRepository.findByPhotoId(generate) == null){
+                model.addAttribute("message", "Successful");
+                byte[] bytes = file.getBytes();
+
+                String originalFilename = file.getOriginalFilename();
+                if (originalFilename != null && !file.isEmpty()) {
+                    String fileExtension = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
+                    String idVideoWithExtension = generate + "." + fileExtension;
+
+                    Path path = Paths.get("C:\\Users\\I\\Pictures\\tiktok\\@" + login + "\\photo\\" + idVideoWithExtension);
+                    Files.createDirectories(path.getParent());
+                    Files.write(path, bytes);
+                    UsersAccount createUser = new UsersAccount(login, password, new Timestamp(System.currentTimeMillis()), idVideoWithExtension);
+                    usersAccountRepository.save(createUser);
+                }else{
+                    model.addAttribute("message", "Add photo");
+                }
+            }else{
+                createAccount(login, password, file, model);
+            }
 
         }else{
             model.addAttribute("message", "Login is already using");
         }
         return "createAccount";
+    }
+
+    private String generatePhotoId(){
+        Random random = new Random();
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (int i = 0; i < 20; i++) {
+            char randomSymbol = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".charAt(random.nextInt("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".length())); // Випадковий символ зі стрічки symbols
+
+            stringBuilder.append(randomSymbol);
+        }
+
+        return stringBuilder.toString();
     }
 }

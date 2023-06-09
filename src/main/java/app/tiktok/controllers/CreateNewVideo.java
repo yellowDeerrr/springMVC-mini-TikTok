@@ -46,19 +46,20 @@ public class CreateNewVideo {
                 byte[] bytes = file.getBytes();
 
                 String originalFilename = file.getOriginalFilename();
-                if (originalFilename != null) {
+                if (originalFilename != null && !file.isEmpty()) {
                     String fileExtension = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
                     String idVideoWithExtension = idVideo + "." + fileExtension;
 
-                    String imagePath = "http://localhost:8080/" + usersAccount.getLogin() + "/" + idVideoWithExtension;
                     Path path = Paths.get("C:\\Users\\I\\Pictures\\tiktok\\@" + usersAccount.getLogin() + "\\video\\" + idVideoWithExtension);
                     Files.createDirectories(path.getParent());
                     Files.write(path, bytes);
-                }
 
-                Videos video = new Videos(login, idVideo, new Timestamp(System.currentTimeMillis()), 0);
-                videosRepository.save(video);
-                model.addAttribute("message", "Successful");
+                    Videos video = new Videos(login, idVideoWithExtension, new Timestamp(System.currentTimeMillis()), 0);
+                    videosRepository.save(video);
+                    model.addAttribute("message", "Successful");
+                }else{
+                    model.addAttribute("message", "Add photo");
+                }
             } catch (IOException e) {
                 model.addAttribute("message", "Unsuccessful");
             }

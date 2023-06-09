@@ -6,6 +6,13 @@
     body{
         background-color: cornflowerblue;
     }
+
+    #t{
+        border: 2px solid #FFFFFF;
+        border-radius: 50%;
+        width: 100px;
+        height: 100px;
+    }
     .thumb figure {
         width: 10%;
         margin: 1%;
@@ -27,13 +34,14 @@
 </style>
     </head>
 <body>
-<h1>Like's User</h1>
-    <h2>Account Name: {{accountId}}</h2>
+    <h1>Account Name: {{accountId}}</h1>
 <div class="thumb">
+    <img src="http://localhost:8080/tiktok/@{{accountId}}/photo/{{photoId}}" id="t">
+    <h2>Like's {{accountId}}</h2>
 {{#likes}}
     <figure>
     <a href="/@{{nameAccountLikesVideo}}/video/{{idVideo}}">
-        <img src="http://localhost:8080/tiktok/@{{nameAccountLikesVideo}}/video/{{idVideo}}.png">
+        <img src="http://localhost:8080/tiktok/@{{nameAccountLikesVideo}}/video/{{idVideo}}">
     </a>
         <figcaption>Account Name: {{nameAccountLikesVideo}}</figcaption>
     </figure>

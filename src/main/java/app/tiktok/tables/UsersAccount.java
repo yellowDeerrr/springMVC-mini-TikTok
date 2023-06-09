@@ -13,14 +13,16 @@ public class UsersAccount {
     private String login;
     private String password;
     private Timestamp registryTime;
+    private String photoId;
 
     public UsersAccount() {
     }
 
-    public UsersAccount(String login, String password, Timestamp registryTime) {
+    public UsersAccount(String login, String password, Timestamp registryTime, String photoId) {
         this.login = login;
         this.password = password;
         this.registryTime = registryTime;
+        this.photoId = photoId;
     }
 
     public int getId() {
@@ -53,5 +55,13 @@ public class UsersAccount {
 
     public void setRegistryTime(Timestamp registryTime) {
         this.registryTime = registryTime;
+    }
+
+    public String getPhotoId() {
+        return photoId;
+    }
+
+    public void setPhotoId(String photoId) {
+        this.photoId = photoId;
     }
 }
