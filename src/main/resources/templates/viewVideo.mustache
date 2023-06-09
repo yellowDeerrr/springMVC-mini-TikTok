@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Document</title>
+</head>
+<body>
+<h1>Account Details</h1>
+
+<p>Account Name: {{accountName}}</p>
+<p>Video ID: {{idVideo}}</p>
+
+<img src="http://localhost:8080/tiktok/@{{accountName}}/video/{{idVideo}}.png" alt="Error">
+
+<form method="get" action="/foryou">
+    <input type="submit" value="Next video">
+</form>
+<form method="post">
+    <h2>If you want like</h2>
+    <input type="text" name="login" placeholder="Enter Login">
+    <input type="password" name="password" placeholder="Enter Password">
+    <input type="submit" value="Like">
+</form>
+<form method="get" action="/@{{accountName}}">
+    <input type="submit" value="View Profile">
+</form>
+
+{{#message}}
+    <h3>{{message}}</h3>
+{{/message}}
+</body>
+</html>
