@@ -1,7 +1,18 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Document</title>
+    <title>Watch video name account {{accountName}}</title>
+    <style>
+        img {
+            border: 2px solid #FFFFFF;
+            border-radius: 10%;
+            width: 155px;
+            height: 155px;
+        }
+        body{
+            background-color: cornflowerblue;
+        }
+    </style>
 </head>
 <body>
 <h1>Account Details</h1>
@@ -10,7 +21,7 @@
 <p>Video ID: {{idVideo}}</p>
 
 <img src="http://localhost:8080/tiktok/@{{accountName}}/video/{{idVideo}}.png" alt="Error">
-
+<h3>Likes: {{likes}}</h3>
 <form method="get" action="/foryou">
     <input type="submit" value="Next video">
 </form>

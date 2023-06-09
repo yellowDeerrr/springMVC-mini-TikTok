@@ -19,21 +19,15 @@ public class ForYouController {
     public String getPageForYou(){
         long rowCount = videosRepository.count();
 
-// Створення об'єкту Random
         Random random = new Random();
 
-// Генерація випадкового індексу
         int randomIndex = random.nextInt((int) rowCount);
 
-// Отримання списку записів з бази даних
         List<Videos> videoList = videosRepository.findAll();
 
-// Перевірка, чи список не порожній
         if (!videoList.isEmpty()) {
-            // Отримання випадкового запису
             Videos randomVideo = videoList.get(randomIndex);
 
-            // Отримання значень nameAccount і codeVideo з випадкового запису
             String nameAccount = randomVideo.getNameAccount();
             String codeVideo = randomVideo.getCodeVideo();
 

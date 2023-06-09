@@ -1,7 +1,6 @@
 package app.tiktok.tables;
 
 import jakarta.persistence.*;
-
 import java.sql.Timestamp;
 
 @Table(name = "users_videos")
@@ -14,16 +13,18 @@ public class Videos {
     private String nameAccount;
     private String codeVideo;
     private Timestamp publicationTime;
+    private int likes;
 
     // Конструктори, гетери і сетери
 
     public Videos() {
     }
 
-    public Videos(String nameAccount, String codeVideo, Timestamp publicationTime) {
+    public Videos(String nameAccount, String codeVideo, Timestamp publicationTime, int likes) {
         this.nameAccount = nameAccount;
         this.codeVideo = codeVideo;
         this.publicationTime = publicationTime;
+        this.likes = likes;
     }
 
     public Long getId() {
@@ -56,5 +57,13 @@ public class Videos {
 
     public void setPublicationTime(Timestamp publicationTime) {
         this.publicationTime = publicationTime;
+    }
+
+    public int getLikes() {
+        return likes;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
     }
 }

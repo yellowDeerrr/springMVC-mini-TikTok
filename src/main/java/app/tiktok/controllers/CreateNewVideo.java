@@ -56,7 +56,7 @@ public class CreateNewVideo {
                     Files.write(path, bytes);
                 }
 
-                Videos video = new Videos(login, idVideo, new Timestamp(System.currentTimeMillis()));
+                Videos video = new Videos(login, idVideo, new Timestamp(System.currentTimeMillis()), 0);
                 videosRepository.save(video);
                 model.addAttribute("message", "Successful");
             } catch (IOException e) {

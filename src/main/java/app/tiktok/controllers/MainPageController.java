@@ -2,7 +2,9 @@ package app.tiktok.controllers;
 
 import app.tiktok.repositores.LikesRepository;
 import app.tiktok.repositores.UsersAccountRepository;
+import app.tiktok.repositores.VideosRepository;
 import app.tiktok.tables.Likes;
+import app.tiktok.tables.Videos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +25,8 @@ public class MainPageController {
     private LikesRepository likesRepository;
     @Autowired
     private UsersAccountRepository usersAccountRepository;
+    @Autowired
+    private VideosRepository videosRepository;
     @GetMapping("/")
     public String mainPage(){
         return "main";
@@ -32,6 +36,7 @@ public class MainPageController {
     public String getAccountDetails(@PathVariable("accountName") String accountName, @PathVariable("idVideo") String idVideo, Model model) {
         model.addAttribute("accountName", accountName);
         model.addAttribute("idVideo", idVideo);
+        model.addAttribute("likes", videosRepository.findByNameAccountAndCodeVideo(accountName, idVideo).getLikes());
 
         return "viewVideo"; // Приклад: Повернення назви представлення для відображення даних облікового запису
     }
@@ -40,9 +45,12 @@ public class MainPageController {
     public String addLike(@RequestParam String login, @RequestParam String password, @PathVariable("accountName") String accountName, @PathVariable("idVideo") String idVideo, Model model){
         if (usersAccountRepository.findByLoginAndPassword(login, password) != null){
             if (likesRepository.findByAccountIdAndNameAccountLikesVideoAndIdVideo(login, accountName, idVideo) == null){
+                model.addAttribute("message", "Successful");
                 Likes addLike = new Likes(accountName, idVideo, login);
                 likesRepository.save(addLike);
-                model.addAttribute("message", "Successful");
+                Videos video = videosRepository.findByNameAccountAndCodeVideo(accountName, idVideo);
+                video.setLikes(video.getLikes() + 1);
+                videosRepository.save(video);
             }
             else{
                 model.addAttribute("message", "You already liked this video");
@@ -58,6 +66,10 @@ public class MainPageController {
         if(usersAccountRepository.findByLogin(accountName) != null){
             List<Likes> likes = likesRepository.findAllByAccountId(accountName);
             model.addAttribute("likes", likes);
+            model.addAttribute("accountId", accountName);
+            if (likes == null){
+                model.addAttribute("errorMessage", "Account hasn't likes");
+            }
         }else{
             model.addAttribute("errorMessage", "Account doesn't exist");
         }

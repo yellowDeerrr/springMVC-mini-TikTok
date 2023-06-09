@@ -27,6 +27,7 @@ public class CreateAccountController {
             model.addAttribute("message", "Successful");
             UsersAccount createUser = new UsersAccount(login, password, new Timestamp(System.currentTimeMillis()));
             usersAccountRepository.save(createUser);
+
         }else{
             model.addAttribute("message", "Login is already using");
         }

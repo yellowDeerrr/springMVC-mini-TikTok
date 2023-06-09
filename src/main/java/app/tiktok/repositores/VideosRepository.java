@@ -7,4 +7,5 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface VideosRepository extends JpaRepository<Videos, Long> {
+    Videos findByNameAccountAndCodeVideo(String nameAccount, String codeVideo);
 }
