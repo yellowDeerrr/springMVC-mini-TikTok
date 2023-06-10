@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Create Video</title>
 </head>
@@ -11,8 +11,8 @@
     <input type="submit" value="Create Video">
 </form>
 
-{{#message}}
-    <h3>{{message}}</h3>
-{{/message}}
+<div th:if="${message}">
+    <h3 th:text="${message}"></h3>
+</div>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Create Account</title>
 </head>
@@ -10,8 +10,9 @@
     <input type="file" name="file" placeholder="Load Photo">
     <input type="submit">
 </form>
-{{#message}}
-    <h2>{{message}}</h2>
-{{/message}}
+
+<div th:if="${message}">
+    <h2 th:text="${message}"></h2>
+</div>
 </body>
 </html>

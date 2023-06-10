@@ -2,7 +2,6 @@ package app.tiktok.controllers;
 
 import app.tiktok.repositores.VideosRepository;
 import app.tiktok.tables.Videos;
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

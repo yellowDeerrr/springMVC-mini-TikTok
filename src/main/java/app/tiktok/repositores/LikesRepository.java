@@ -8,4 +8,5 @@ import java.util.List;
 public interface LikesRepository extends JpaRepository<Likes, Long> {
     List<Likes> findAllByAccountId(String accountId);
     Likes findByAccountIdAndNameAccountLikesVideoAndIdVideo(String accountId, String nameAccountLikesVideo, String idVideo);
+    Likes findByAccountId(String accountId);
 }

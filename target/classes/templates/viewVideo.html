@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Watch video</title>
+    <style>
+        #img {
+            border: 2px solid #FFFFFF;
+            border-radius: 10%;
+            width: 200px;
+            height: 200px;
+        }
+        #video {
+            border: 2px solid #FFFFFF;
+            border-radius: 7%;
+            width: 450px;
+            height: 250px;
+        }
+        body{
+            background-color: cornflowerblue;
+        }
+        #avatar{
+            border: 2px solid #FFFFFF;
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <h1>Account Details</h1>
+
+    <p>Account Name: <span th:text="${accountName}"></span></p>
+    <p>Video ID: <span th:text="${idVideo}"></span></p>
+    <img th:src="@{'http://localhost:8080/tiktok/@' + ${accountName} + '/photo/' + ${photoId}}" alt="Error" id="avatar">
+    <div th:if="${type eq 'video'}">
+        <video th:src="@{'http://localhost:8080/tiktok/@' + ${accountName} + '/video/' + ${idVideo}}" controls id="video">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <div th:if="${type eq 'img'}">
+        <img th:src="@{'http://localhost:8080/tiktok/@' + ${accountName} + '/video/' + ${idVideo}}" alt="Error" id="img">
+    </div>
+</div>
+<h3>Likes: <span th:text="${like}"></span></h3>
+<form method="get" action="/foryou">
+    <button type="submit">Next video</button>
+</form>
+
+<form method="post">
+    <h2>If you want to like</h2>
+    <input type="text" name="login" placeholder="Enter Login">
+    <input type="password" name="password" placeholder="Enter Password">
+    <button type="submit">Like</button>
+</form>
+
+<form method="get" th:action="@{'/@' + ${accountName}}">
+    <button type="submit">View Profile</button>
+</form>
+
+
+<div th:each="message : ${message}">
+    <h3 th:text="${message}"></h3>
+</div>
+</body>
+</html>

@@ -14,10 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Base64;
 import java.util.List;
 
 @Controller
@@ -38,16 +34,36 @@ public class MainPageController {
         model.addAttribute("accountName", accountName);
         model.addAttribute("idVideo", idVideo);
         model.addAttribute("like", videosRepository.findByNameAccountAndCodeVideo(accountName, idVideo).getLikes());
+        model.addAttribute("photoId", usersAccountRepository.findByLogin(accountName).getPhotoId());
 
-        return "viewVideo"; // Приклад: Повернення назви представлення для відображення даних облікового запису
+        if (idVideo.endsWith(".mp4") || idVideo.endsWith(".avi")) {
+            model.addAttribute("type", "video");
+        } else if (idVideo.endsWith(".jpg") || idVideo.endsWith(".png")) {
+            model.addAttribute("type", "img");
+        }else{
+            model.addAttribute("type", "img");
+        }
+        return "viewVideo";
     }
 
     @PostMapping("/@{accountName}/video/{idVideo}")
     public String addLike(@RequestParam String login, @RequestParam String password, @PathVariable("accountName") String accountName, @PathVariable("idVideo") String idVideo, Model model){
+        if (idVideo.endsWith(".mp4") || idVideo.endsWith(".avi")) {
+            model.addAttribute("type", "video");
+        } else if (idVideo.endsWith(".jpg") || idVideo.endsWith(".png")) {
+            model.addAttribute("type", "img");
+        }else{
+            model.addAttribute("type", "img");
+        }
+        model.addAttribute("accountName", accountName);
+        model.addAttribute("idVideo", idVideo);
         model.addAttribute("like", videosRepository.findByNameAccountAndCodeVideo(accountName, idVideo).getLikes());
+        model.addAttribute("photoId", usersAccountRepository.findByLogin(accountName).getPhotoId());
+
         if (usersAccountRepository.findByLoginAndPassword(login, password) != null){
             if (likesRepository.findByAccountIdAndNameAccountLikesVideoAndIdVideo(login, accountName, idVideo) == null){
                 model.addAttribute("message", "Successful");
+
                 Likes addLike = new Likes(accountName, idVideo, login);
                 likesRepository.save(addLike);
                 Videos video = videosRepository.findByNameAccountAndCodeVideo(accountName, idVideo);
@@ -68,11 +84,12 @@ public class MainPageController {
         if(usersAccountRepository.findByLogin(accountName) != null){
             List<Likes> likes = likesRepository.findAllByAccountId(accountName);
             UsersAccount usersAccount = usersAccountRepository.findByLogin(accountName);
-            model.addAttribute("likes", likes);
             model.addAttribute("accountId", accountName);
             model.addAttribute("photoId", usersAccount.getPhotoId());
-            if (likes == null){
+            if (likes.isEmpty()){
                 model.addAttribute("errorMessage", "Account hasn't likes");
+            }else{
+                model.addAttribute("likes", likes);
             }
         }else{
             model.addAttribute("errorMessage", "Account doesn't exist");
