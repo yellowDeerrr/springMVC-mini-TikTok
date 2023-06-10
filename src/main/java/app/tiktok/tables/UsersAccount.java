@@ -12,7 +12,9 @@ public class UsersAccount {
     private int id;
     private String login;
     private String password;
+    @Column(name = "registry_time")
     private Timestamp registryTime;
+    @Column(name = "photo_id")
     private String photoId;
 
     public UsersAccount() {

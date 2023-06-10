@@ -25,14 +25,33 @@
             height: 100px;
             margin-bottom: 10px;
         }
+        .search-form {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 10px;
+            margin-right: 10px;
+        }
+        .search-form input[type="text"] {
+            margin-right: 5px;
+        }
+        .search-form button[type="submit"] {
+            margin-right: 5px;
+        }
     </style>
 </head>
 <body>
+<div class="search-form">
+    <form method="get" action="/search">
+        <input type="text" name="s" placeholder="Search">
+        <button type="submit">Search</button>
+    </form>
+</div>
+
 <div>
     <h1>Account Details</h1>
 
     <p>Account Name: <span th:text="${accountName}"></span></p>
-    <p>Video ID: <span th:text="${idVideo}"></span></p>
+    <p>Video name: <span th:text="${nameVideo}"></span></p>
     <img th:src="@{'http://localhost:8080/tiktok/@' + ${accountName} + '/photo/' + ${photoId}}" alt="Error" id="avatar">
     <div th:if="${type eq 'video'}">
         <video th:src="@{'http://localhost:8080/tiktok/@' + ${accountName} + '/video/' + ${idVideo}}" controls id="video">
@@ -59,7 +78,6 @@
 <form method="get" th:action="@{'/@' + ${accountName}}">
     <button type="submit">View Profile</button>
 </form>
-
 
 <div th:each="message : ${message}">
     <h3 th:text="${message}"></h3>

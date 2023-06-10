@@ -8,17 +8,22 @@ public class Likes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(name = "name_account_likes_video")
     private String nameAccountLikesVideo;
+    @Column(name = "id_video")
     private String idVideo;
+    @Column(name = "account_id")
     private String accountId;
-
+    @Column(name = "name_video")
+    private String nameVideo;
     public Likes() {
     }
 
-    public Likes(String nameAccountLikesVideo, String idVideo, String accountId) {
+    public Likes(String nameAccountLikesVideo, String idVideo, String accountId, String nameVideo) {
         this.nameAccountLikesVideo = nameAccountLikesVideo;
         this.idVideo = idVideo;
         this.accountId = accountId;
+        this.nameVideo = nameVideo;
     }
 
     public int getId() {
@@ -51,5 +56,13 @@ public class Likes {
 
     public void setAccountId(String accountId) {
         this.accountId = accountId;
+    }
+
+    public String getNameVideo() {
+        return nameVideo;
+    }
+
+    public void setNameVideo(String nameVideo) {
+        this.nameVideo = nameVideo;
     }
 }

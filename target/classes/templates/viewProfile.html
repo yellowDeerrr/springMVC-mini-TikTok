@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>View Profile</title>
     <style>
@@ -43,6 +43,7 @@
                 <img th:src="@{'http://localhost:8080/tiktok/@' + ${like.nameAccountLikesVideo} + '/video/' + ${like.idVideo}}" alt="Video didn't load">
             </a>
             <figcaption>Account Name: <span th:text="${like.nameAccountLikesVideo}"></span> </figcaption>
+            <figcaption>Video Name: <span th:text="${like.nameVideo}"></span> </figcaption>
         </figure>
         <p th:text="${errorMessage}"></p>
 </div>

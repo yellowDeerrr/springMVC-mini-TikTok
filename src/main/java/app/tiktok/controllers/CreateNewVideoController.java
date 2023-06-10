@@ -23,7 +23,7 @@ import java.util.Random;
 
 
 @Controller
-public class CreateNewVideo {
+public class CreateNewVideoController {
     @Autowired
     private UsersAccountRepository usersAccountRepository;
     @Autowired
@@ -35,7 +35,7 @@ public class CreateNewVideo {
     }
 
     @PostMapping("/createNewVideo")
-    public String createVideo(@RequestParam String login, @RequestParam String password, @RequestParam MultipartFile file, Model model){
+    public String createVideo(@RequestParam String login, @RequestParam String password, @RequestParam String nameVideo, @RequestParam MultipartFile file, Model model){
         UsersAccount usersAccount = usersAccountRepository.findByLoginAndPassword(login, password);
         if (usersAccount == null){
             model.addAttribute("message", "Error account");
@@ -54,7 +54,7 @@ public class CreateNewVideo {
                     Files.createDirectories(path.getParent());
                     Files.write(path, bytes);
 
-                    Videos video = new Videos(login, idVideoWithExtension, new Timestamp(System.currentTimeMillis()), 0);
+                    Videos video = new Videos(login, idVideoWithExtension, new Timestamp(System.currentTimeMillis()), 0, nameVideo);
                     videosRepository.save(video);
                     model.addAttribute("message", "Successful");
                 }else{
