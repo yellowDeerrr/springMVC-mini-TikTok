@@ -93,4 +93,30 @@ public class ChangeAccountCotroller {
     public String generatePhotoId(){
         return getString();
     }
+    
+    @GetMapping("/changeAccount/state")
+    public String getPageState(Model model){
+        if (account == null){return "error";}
+
+        model.addAttribute("state", account.isCloseOrOpenAccount() ? "open" : "close");
+        return "changeAccount/state";
+    }
+
+    @PostMapping("/changeAccount/state")
+    public String state(@RequestParam String newState, Model model){
+        if (account == null){return "error";}
+
+        if (newState.equals("close")){
+            account.setCloseOrOpenAccount(true);
+        }else if (newState.equals("open")){
+            account.setCloseOrOpenAccount(false);
+        }else{
+            model.addAttribute("message", "Choose");
+        }
+
+                usersAccountRepository.save(account);
+        model.addAttribute("message", "Successful");
+        model.addAttribute("state", newState);
+        return "changeAccount/state";
+    }
 }

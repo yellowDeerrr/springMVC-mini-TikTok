@@ -12,7 +12,10 @@
 <div th:if="${start eq false}">
     <a th:href="@{'http://localhost:8080/@' + ${accountName}}">Link on Account</a>
     <form method="get" action="/changeAccount/avatar">
-        <input type="submit" value="Change avatar">
+        <input type="submit" value="Change Avatar">
+    </form>
+    <form method="get" action="/changeAccount/state">
+        <input type="submit" value="Change State">
     </form>
 </div>
 </body>
