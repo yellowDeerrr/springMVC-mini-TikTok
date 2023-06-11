@@ -50,7 +50,7 @@ public class CreateNewVideoController {
                     String fileExtension = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
                     String idVideoWithExtension = idVideo + "." + fileExtension;
 
-                    Path path = Paths.get("C:\\Users\\I\\Pictures\\tiktok\\@" + usersAccount.getLogin() + "\\video\\" + idVideoWithExtension);
+                    Path path = Paths.get("F:\\Java\\intellji\\tiktok\\src\\main\\resources\\templates\\images\\@" + usersAccount.getLogin() + "\\video\\" + idVideoWithExtension);
                     Files.createDirectories(path.getParent());
                     Files.write(path, bytes);
 

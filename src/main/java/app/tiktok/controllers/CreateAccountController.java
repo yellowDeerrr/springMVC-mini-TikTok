@@ -40,7 +40,7 @@ public class CreateAccountController {
                     String fileExtension = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
                     String idVideoWithExtension = generate + "." + fileExtension;
 
-                    Path path = Paths.get("C:\\Users\\I\\Pictures\\tiktok\\@" + login + "\\photo\\" + idVideoWithExtension);
+                    Path path = Paths.get("F:\\Java\\intellji\\tiktok\\src\\main\\resources\\templates\\images\\@" + login + "\\photo\\" + idVideoWithExtension);
                     Files.createDirectories(path.getParent());
                     Files.write(path, bytes);
                     UsersAccount createUser = new UsersAccount(login, password, new Timestamp(System.currentTimeMillis()), idVideoWithExtension, operator.equals("close"));

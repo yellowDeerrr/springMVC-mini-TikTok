@@ -8,11 +8,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
-
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/tiktok/**")
-                .addResourceLocations("file:C:/Users/I/Pictures/tiktok/");
+                .addResourceLocations("file:F:\\Java\\intellji\\tiktok\\src\\main\\resources\\templates\\images\\");
     }
-    
+
 }
