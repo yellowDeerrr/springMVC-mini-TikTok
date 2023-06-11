@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Change Account Settings</title>
+</head>
+<body>
+<form method="post" action="/changeAccount" th:if="${start eq true}">
+    <input type="text" name="login" placeholder="Enter Login">
+    <input type="text" name="password" placeholder="Enter Password">
+    <input type="submit" value="Submit">
+</form>
+<div th:if="${start eq false}">
+    <a th:href="@{'http://localhost:8080/@' + ${accountName}}">Link on Account</a>
+    <form method="get" action="/changeAccount/avatar">
+        <input type="submit" value="Change avatar">
+    </form>
+</div>
+</body>
+</html>

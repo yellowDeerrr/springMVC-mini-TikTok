@@ -21,12 +21,12 @@ import java.util.Random;
 public class CreateAccountController {
     @Autowired
     private UsersAccountRepository usersAccountRepository;
-    @GetMapping("/CreateAccount")
+    @GetMapping("/createAccount")
     public String getPageCreateAccount(){
         return "createAccount";
     }
 
-    @PostMapping("/CreateAccount")
+    @PostMapping("/createAccount")
     public String createAccount(@RequestParam String login, @RequestParam String password, @RequestParam String operator, @RequestParam MultipartFile file, Model model) throws IOException {
         UsersAccount usersAccount = usersAccountRepository.findByLogin(login);
         if (usersAccount == null){
@@ -58,7 +58,10 @@ public class CreateAccountController {
         return "createAccount";
     }
 
-    private String generatePhotoId(){
+    public String generatePhotoId(){
+        return getString();
+    }
+    static String getString() {
         Random random = new Random();
         StringBuilder stringBuilder = new StringBuilder();
 

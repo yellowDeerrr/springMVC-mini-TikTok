@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Change Avatar</title>
+</head>
+<body>
+<h3>Your Avatar:</h3>
+<img th:src="@{'http://localhost:8080/tiktok/@' + ${accountName} + '/photo/' + ${photoId}}" alt="Error" id="avatar">
+<form method="post" enctype="multipart/form-data" action="/changeAccount/avatar">
+    <input type="file" name="file">
+    <input type="submit">
+</form>
+</body>
+</html>
