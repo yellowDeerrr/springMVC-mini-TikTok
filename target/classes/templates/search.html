@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>View Profile</title>
+    <title>Search</title>
     <style>
         body{
             background-color: cornflowerblue;
@@ -34,7 +34,7 @@
     </style>
 </head>
 <body>
-<h2>Result <span th:text="${res}"></span>:</h2>
+<h2>Result "<span th:text="${res}"></span>":</h2>
 <div class="thumb">
     <figure th:each="resVideos : ${resVideos}">
         <a th:href="@{'/@' + ${resVideos.nameAccount} + '/video/' + ${resVideos.codeVideo}}">

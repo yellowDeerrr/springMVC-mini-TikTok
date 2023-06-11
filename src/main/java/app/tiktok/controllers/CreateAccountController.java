@@ -27,7 +27,7 @@ public class CreateAccountController {
     }
 
     @PostMapping("/CreateAccount")
-    public String createAccount(@RequestParam String login, @RequestParam String password, @RequestParam MultipartFile file, Model model) throws IOException {
+    public String createAccount(@RequestParam String login, @RequestParam String password, @RequestParam String operator, @RequestParam MultipartFile file, Model model) throws IOException {
         UsersAccount usersAccount = usersAccountRepository.findByLogin(login);
         if (usersAccount == null){
             String generate = generatePhotoId();
@@ -43,13 +43,13 @@ public class CreateAccountController {
                     Path path = Paths.get("C:\\Users\\I\\Pictures\\tiktok\\@" + login + "\\photo\\" + idVideoWithExtension);
                     Files.createDirectories(path.getParent());
                     Files.write(path, bytes);
-                    UsersAccount createUser = new UsersAccount(login, password, new Timestamp(System.currentTimeMillis()), idVideoWithExtension);
+                    UsersAccount createUser = new UsersAccount(login, password, new Timestamp(System.currentTimeMillis()), idVideoWithExtension, operator.equals("close"));
                     usersAccountRepository.save(createUser);
                 }else{
                     model.addAttribute("message", "Add photo");
                 }
             }else{
-                createAccount(login, password, file, model);
+                createAccount(login, password, operator, file, model);
             }
 
         }else{

@@ -16,15 +16,18 @@ public class UsersAccount {
     private Timestamp registryTime;
     @Column(name = "photo_id")
     private String photoId;
+    @Column(name = "close_or_open_account")
+    private boolean closeOrOpenAccount;
 
     public UsersAccount() {
     }
 
-    public UsersAccount(String login, String password, Timestamp registryTime, String photoId) {
+    public UsersAccount(String login, String password, Timestamp registryTime, String photoId, boolean closeOrOpenAccount) {
         this.login = login;
         this.password = password;
         this.registryTime = registryTime;
         this.photoId = photoId;
+        this.closeOrOpenAccount = closeOrOpenAccount;
     }
 
     public int getId() {
@@ -65,5 +68,13 @@ public class UsersAccount {
 
     public void setPhotoId(String photoId) {
         this.photoId = photoId;
+    }
+
+    public boolean isCloseOrOpenAccount() {
+        return closeOrOpenAccount;
+    }
+
+    public void setCloseOrOpenAccount(boolean closeOrOpenAccount) {
+        this.closeOrOpenAccount = closeOrOpenAccount;
     }
 }

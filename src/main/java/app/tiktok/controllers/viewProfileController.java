@@ -2,7 +2,6 @@ package app.tiktok.controllers;
 
 import app.tiktok.repositores.LikesRepository;
 import app.tiktok.repositores.UsersAccountRepository;
-import app.tiktok.repositores.VideosRepository;
 import app.tiktok.tables.Likes;
 import app.tiktok.tables.UsersAccount;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +18,6 @@ public class viewProfileController {
     private UsersAccountRepository usersAccountRepository;
     @Autowired
     private LikesRepository likesRepository;
-    @Autowired
-    private VideosRepository videosRepository;
     @GetMapping("/@{accountName}")
     public String addLike(@PathVariable("accountName") String accountName, Model model){
         if(usersAccountRepository.findByLogin(accountName) != null){
@@ -28,11 +25,16 @@ public class viewProfileController {
             UsersAccount usersAccount = usersAccountRepository.findByLogin(accountName);
             model.addAttribute("accountId", accountName);
             model.addAttribute("photoId", usersAccount.getPhotoId());
-            if (likes.isEmpty()){
-                model.addAttribute("errorMessage", "Account hasn't likes");
+            if (!usersAccount.isCloseOrOpenAccount()){
+                if (likes.isEmpty()){
+                    model.addAttribute("errorMessage", "Account hasn't likes");
+                }else{
+                    model.addAttribute("likes", likes);
+                }
             }else{
-                model.addAttribute("likes", likes);
+                model.addAttribute("errorMessage", "Account is close");
             }
+
         }else{
             model.addAttribute("errorMessage", "Account doesn't exist");
         }
