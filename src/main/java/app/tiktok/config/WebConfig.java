@@ -11,7 +11,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/tiktok/**")
-                .addResourceLocations("file:F:\\Java\\intellji\\tiktok\\src\\main\\resources\\templates\\images\\");
+                .addResourceLocations("file:F:\\Java\\intellji\\spring\\projects\\tiktok\\src\\main\\resources\\templates\\images\\");
     }
 
 }

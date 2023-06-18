@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Change Name</title>
+</head>
+<body>
+<div>
+    <h2>Your Name Account: <span th:text="${name}"></span></h2>
+</div>
+<div>
+    <form method="post" action="/changeAccount/name">
+        <input type="text" name="newName" placeholder="Enter New Name (new login)">
+        <input type="submit">
+    </form>
+    <h3 th:text="${message}"></h3>
+</div>
+</body>
+</html>

@@ -12,6 +12,8 @@ public class UsersAccount {
     private int id;
     private String login;
     private String password;
+    @Column(name = "user_name")
+    private String userName;
     @Column(name = "registry_time")
     private Timestamp registryTime;
     @Column(name = "photo_id")
@@ -22,9 +24,10 @@ public class UsersAccount {
     public UsersAccount() {
     }
 
-    public UsersAccount(String login, String password, Timestamp registryTime, String photoId, boolean closeOrOpenAccount) {
+    public UsersAccount(String login, String password, String userName, Timestamp registryTime, String photoId, boolean closeOrOpenAccount) {
         this.login = login;
         this.password = password;
+        this.userName = userName;
         this.registryTime = registryTime;
         this.photoId = photoId;
         this.closeOrOpenAccount = closeOrOpenAccount;
@@ -52,6 +55,14 @@ public class UsersAccount {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public Timestamp getRegistryTime() {

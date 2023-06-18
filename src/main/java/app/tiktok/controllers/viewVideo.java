@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import static app.tiktok.SHA256.getHashCode;
+
 @Controller
 public class viewVideo {
     @Autowired
@@ -26,6 +28,7 @@ public class viewVideo {
         Videos videoLikesAndNameVideo = videosRepository.findByNameAccountAndCodeVideo(accountName, idVideo);
 
         model.addAttribute("accountName", accountName);
+        model.addAttribute("userName", usersAccountRepository.findByLogin(accountName).getUserName());
         model.addAttribute("idVideo", idVideo);
         model.addAttribute("like", videoLikesAndNameVideo.getLikes());
         model.addAttribute("nameVideo", videoLikesAndNameVideo.getNameVideo());
@@ -53,12 +56,13 @@ public class viewVideo {
             model.addAttribute("type", "img");
         }
         model.addAttribute("accountName", accountName);
+        model.addAttribute("userName", usersAccountRepository.findByLogin(accountName).getUserName());
         model.addAttribute("idVideo", idVideo);
         model.addAttribute("like", videoLikesAndNameVideo.getLikes());
         model.addAttribute("nameVideo", videoLikesAndNameVideo.getNameVideo());
         model.addAttribute("photoId", usersAccountRepository.findByLogin(accountName).getPhotoId());
 
-        if (usersAccountRepository.findByLoginAndPassword(login, password) != null){
+        if (usersAccountRepository.findByLoginAndPassword(login, getHashCode(password)) != null){
             if (likesRepository.findByAccountIdAndNameAccountLikesVideoAndIdVideo(login, accountName, idVideo) == null){
                 model.addAttribute("message", "Successful");
 

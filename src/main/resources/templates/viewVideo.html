@@ -42,7 +42,7 @@
 <body>
 <div class="search-form">
     <form method="get" action="/search">
-        <input type="text" name="s" placeholder="Search">
+        <input type="text" name="request" placeholder="Search">
         <button type="submit">Search</button>
     </form>
 </div>
@@ -50,7 +50,7 @@
 <div>
     <h1>Account Details</h1>
 
-    <p>Account Name: <span th:text="${accountName}"></span></p>
+    <p>User Name: <span th:text="${userName}"></span></p>
     <p>Video name: <span th:text="${nameVideo}"></span></p>
     <img th:src="@{'http://localhost:8080/tiktok/@' + ${accountName} + '/photo/' + ${photoId}}" alt="Error" id="avatar">
     <div th:if="${type eq 'video'}">

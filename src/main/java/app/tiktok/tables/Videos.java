@@ -13,6 +13,8 @@ public class Videos {
     private String nameAccount;
     @Column(name = "code_video")
     private String codeVideo;
+    @Column(name = "user_name")
+    private String userName;
     @Column(name = "publication_time")
     private Timestamp publicationTime;
     @Column(name = "likes")
@@ -23,9 +25,10 @@ public class Videos {
     public Videos() {
     }
 
-    public Videos(String nameAccount, String codeVideo, Timestamp publicationTime, int likes, String nameVideo) {
+    public Videos(String nameAccount, String codeVideo, String userName, Timestamp publicationTime, int likes, String nameVideo) {
         this.nameAccount = nameAccount;
         this.codeVideo = codeVideo;
+        this.userName = userName;
         this.publicationTime = publicationTime;
         this.likes = likes;
         this.nameVideo = nameVideo;
@@ -53,6 +56,14 @@ public class Videos {
 
     public void setCodeVideo(String codeVideo) {
         this.codeVideo = codeVideo;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public Timestamp getPublicationTime() {

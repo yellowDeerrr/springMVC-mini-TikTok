@@ -18,7 +18,7 @@ public class ForYouController {
     public String getPageForYou(){
         long rowCount = videosRepository.count();
         if (rowCount <= 0){
-            return "videoDoesntExist+";
+            return "videoDoesntExist";
         }
 
         else {
