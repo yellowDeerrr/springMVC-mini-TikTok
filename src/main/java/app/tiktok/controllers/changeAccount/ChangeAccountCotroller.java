@@ -1,4 +1,4 @@
-package app.tiktok.controllers;
+package app.tiktok.controllers.changeAccount;
 
 import app.tiktok.SHA256;
 import app.tiktok.repositores.UsersAccountRepository;
@@ -22,8 +22,8 @@ import static app.tiktok.SHA256.getHashCode;
 @Controller
 public class ChangeAccountCotroller {
     @Autowired
-    private UsersAccountRepository usersAccountRepository;
-    private UsersAccount account;
+    protected UsersAccountRepository usersAccountRepository;
+    protected UsersAccount account;
     @GetMapping("/changeAccount")
     public String getPageChangeAccount(Model model){
         if (account == null){
@@ -37,8 +37,8 @@ public class ChangeAccountCotroller {
     }
 
     @PostMapping("/changeAccount")
-    public String changeAccount(@RequestParam String login, @RequestParam String password, Model model){
-        UsersAccount userAccount = usersAccountRepository.findByLoginAndPassword(login, getHashCode(password));
+    public String changeAccount(@RequestParam String login, @RequestParam String password, @RequestParam String userName, Model model){
+        UsersAccount userAccount = usersAccountRepository.findByLoginAndPasswordAndUserName(login, getHashCode(password), userName);
 
         if (userAccount == null){
             model.addAttribute("start", true);
@@ -124,14 +124,13 @@ public class ChangeAccountCotroller {
             model.addAttribute("message", "Choose");
         }
 
-                usersAccountRepository.save(account);
+        usersAccountRepository.save(account);
         model.addAttribute("message", "Successful");
         model.addAttribute("state", newState);
         return "changeAccount/state";
     }
 
-
-    @GetMapping("/changeAccount/name")
+    @GetMapping("/changeAccount/login")
     public String getPageName(Model model){
         if (account == null){return "error";}
 
@@ -139,7 +138,7 @@ public class ChangeAccountCotroller {
         return "changeAccount/name";
     }
 
-    @PostMapping("/changeAccount/name")
+    @PostMapping("/changeAccount/login")
     public String name(@RequestParam String newName, Model model){
         if (account == null){return "error";}
 
@@ -178,6 +177,12 @@ public class ChangeAccountCotroller {
         return "changeAccount/password";
     }
 
+    @GetMapping("/changeAccount/switch")
+    public String switchAccount(){
+        account = null;
+        return "redirect:/changeAccount";
+    }
+
     @PostMapping("/changeAccount/video")
     public String video(@RequestParam MultipartFile file, Model model) throws IOException {
         if (account == null){return "error";}
@@ -213,10 +218,5 @@ public class ChangeAccountCotroller {
             model.addAttribute("message", "Add photo");
         }
         return "changeAccount/avatar";
-    }
-    @GetMapping("/changeAccount/switch")
-    public String switchAccount(){
-        account = null;
-        return "redirect:/changeAccount";
     }
 }

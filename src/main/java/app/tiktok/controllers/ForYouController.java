@@ -30,10 +30,10 @@ public class ForYouController {
 
             Videos randomVideo = videoList.get(randomIndex);
 
-            String nameAccount = randomVideo.getNameAccount();
+            String userName = randomVideo.getUserName();
             String codeVideo = randomVideo.getCodeVideo();
 
-            return "redirect:/@" + nameAccount + "/video/" + codeVideo;
+            return "redirect:/@" + userName + "/video/" + codeVideo;
         }
     }
 }

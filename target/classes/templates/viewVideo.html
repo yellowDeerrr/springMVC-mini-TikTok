@@ -52,15 +52,15 @@
 
     <p>User Name: <span th:text="${userName}"></span></p>
     <p>Video name: <span th:text="${nameVideo}"></span></p>
-    <img th:src="@{'http://localhost:8080/tiktok/@' + ${accountName} + '/photo/' + ${photoId}}" alt="Error" id="avatar">
+    <img th:src="@{'http://localhost:8080/tiktok/@' + ${userName} + '/photo/' + ${photoId}}" alt="Error" id="avatar">
     <div th:if="${type eq 'video'}">
-        <video th:src="@{'http://localhost:8080/tiktok/@' + ${accountName} + '/video/' + ${idVideo}}" controls id="video">
+        <video th:src="@{'http://localhost:8080/tiktok/@' + ${userName} + '/video/' + ${idVideo}}" controls id="video">
             Your browser does not support the video tag.
         </video>
     </div>
 
     <div th:if="${type eq 'img'}">
-        <img th:src="@{'http://localhost:8080/tiktok/@' + ${accountName} + '/video/' + ${idVideo}}" alt="Error" id="img">
+        <img th:src="@{'http://localhost:8080/tiktok/@' + ${userName} + '/video/' + ${idVideo}}" alt="Error" id="img">
     </div>
 </div>
 <h3>Likes: <span th:text="${like}"></span></h3>
@@ -75,7 +75,7 @@
     <button type="submit">Like</button>
 </form>
 
-<form method="get" th:action="@{'/@' + ${accountName}}">
+<form method="get" th:action="@{'/@' + ${userName}}">
     <button type="submit">View Profile</button>
 </form>
 

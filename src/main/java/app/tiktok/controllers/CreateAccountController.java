@@ -31,31 +31,34 @@ public class CreateAccountController {
 
     @PostMapping("/createAccount")
     public String createAccount(@RequestParam String login, @RequestParam String password, @RequestParam String userName, @RequestParam String operator, @RequestParam MultipartFile file, Model model) throws IOException {
-        UsersAccount usersAccount = usersAccountRepository.findByLogin(login);
+        if (usersAccountRepository.findByLogin(login) == null){
+            if (usersAccountRepository.findByUserName(userName) == null){
 
-        if (usersAccount == null){
-            String generate = createCodeForFile();
+                String generate = createCodeForFile();
+                if (usersAccountRepository.findByPhotoId(generate) == null){
+                    byte[] bytes = file.getBytes();
 
-            if (usersAccountRepository.findByPhotoId(generate) == null){
-                model.addAttribute("message", "Successful");
-                byte[] bytes = file.getBytes();
+                    String originalFilename = file.getOriginalFilename();
+                    if (originalFilename != null && !file.isEmpty()) {
+                        model.addAttribute("message", "Successful");
 
-                String originalFilename = file.getOriginalFilename();
-                if (originalFilename != null && !file.isEmpty()) {
-                    String fileExtension = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
-                    String idVideoWithExtension = generate + "." + fileExtension;
+                        String fileExtension = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
+                        String idVideoWithExtension = generate + "." + fileExtension;
 
-                    Path path = Paths.get("F:\\Java\\intellji\\spring\\projects\\tiktok\\src\\main\\resources\\templates\\images\\@" + login + "\\photo\\" + idVideoWithExtension);
-                    Files.createDirectories(path.getParent());
-                    Files.write(path, bytes);
+                        Path path = Paths.get("F:\\Java\\intellji\\spring\\projects\\tiktok\\src\\main\\resources\\templates\\images\\@" + userName + "\\photo\\" + idVideoWithExtension);
+                        Files.createDirectories(path.getParent());
+                        Files.write(path, bytes);
 
-                    UsersAccount createUser = new UsersAccount(login, getHashCode(password), userName, new Timestamp(System.currentTimeMillis()), idVideoWithExtension, operator.equals("close"));
-                    usersAccountRepository.save(createUser);
+                        UsersAccount createUser = new UsersAccount(login, getHashCode(password), userName, new Timestamp(System.currentTimeMillis()), idVideoWithExtension, operator.equals("close"));
+                        usersAccountRepository.save(createUser);
+                    }else{
+                        model.addAttribute("message", "Add photo");
+                    }
                 }else{
-                    model.addAttribute("message", "Add photo");
+                    createAccount(login, password, userName, operator, file, model);
                 }
             }else{
-                createAccount(userName, login, password, operator, file, model);
+                model.addAttribute("message", "User name must be unique");
             }
         }else{
             model.addAttribute("message", "Login is already using");

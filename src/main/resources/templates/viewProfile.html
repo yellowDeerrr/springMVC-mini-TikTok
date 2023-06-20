@@ -34,21 +34,24 @@
     </style>
 </head>
 <body>
-<h1>Account Name: <span th:text="${accountId}"></span></h1>
-<div class="thumb">
-    <img th:src="@{'http://localhost:8080/tiktok/@' + ${accountId} + '/photo/' + ${photoId}}" id="t">
-    <h2>Like's <span th:text="${accountId}"></span></h2>
-        <figure th:each="like : ${likes}">
-            <a th:href="@{'/@' + ${like.nameAccountLikesVideo} + '/video/' + ${like.idVideo}}">
-                <img th:src="@{'http://localhost:8080/tiktok/@' + ${like.nameAccountLikesVideo} + '/video/' + ${like.idVideo}}" alt="Video didn't load">
-            </a>
-            <figcaption>Account Name: <span th:text="${like.nameAccountLikesVideo}"></span> </figcaption>
-            <figcaption>Video Name: <span th:text="${like.nameVideo}"></span> </figcaption>
-        </figure>
-        <p th:text="${errorMessage}"></p>
-</div>
+<h1>User Name: <span th:text="${userName}"></span></h1>
+<form method="get" th:action="@{'/@' + ${userName} + '/likes'}">
+    <input type="submit" value="Like's this user">
+</form>
 <form method="get" action="/">
     <input type="submit" value="Main Page">
 </form>
+<div class="thumb">
+    <img th:src="@{'http://localhost:8080/tiktok/@' + ${userName} + '/photo/' + ${photoId}}" id="t">
+    <h2>Video's <span th:text="${userName}"></span></h2>
+    <figure th:each="video : ${videos}">
+        <a th:href="@{'/@' + ${video.userName} + '/video/' + ${video.codeVideo}}">
+            <img th:src="@{'http://localhost:8080/tiktok/@' + ${video.userName} + '/video/' + ${video.codeVideo}}" alt="Video didn't load">
+        </a>
+        <figcaption>Account Name: <span th:text="${video.userName}"></span> </figcaption>
+        <figcaption>Video Name: <span th:text="${video.nameVideo}"></span> </figcaption>
+    </figure>
+    <p th:text="${errorMessage}"></p>
+</div>
 </body>
 </html>

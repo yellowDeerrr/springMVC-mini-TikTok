@@ -4,6 +4,7 @@ import app.tiktok.repositores.LikesRepository;
 import app.tiktok.repositores.UsersAccountRepository;
 import app.tiktok.repositores.VideosRepository;
 import app.tiktok.tables.Likes;
+import app.tiktok.tables.UsersAccount;
 import app.tiktok.tables.Videos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,16 +24,15 @@ public class viewVideo {
     private LikesRepository likesRepository;
     @Autowired
     private VideosRepository videosRepository;
-    @GetMapping("/@{accountName}/video/{idVideo}")
-    public String getAccountDetails(@PathVariable("accountName") String accountName, @PathVariable("idVideo") String idVideo, Model model) {
-        Videos videoLikesAndNameVideo = videosRepository.findByNameAccountAndCodeVideo(accountName, idVideo);
+    @GetMapping("/@{userName}/video/{idVideo}")
+    public String getAccountDetails(@PathVariable("userName") String userName, @PathVariable("idVideo") String idVideo, Model model) {
+        Videos videoLikesAndNameVideo = videosRepository.findByUserNameAndCodeVideo(userName, idVideo);
 
-        model.addAttribute("accountName", accountName);
-        model.addAttribute("userName", usersAccountRepository.findByLogin(accountName).getUserName());
+        model.addAttribute("userName", userName);
         model.addAttribute("idVideo", idVideo);
         model.addAttribute("like", videoLikesAndNameVideo.getLikes());
-        model.addAttribute("nameVideo", videoLikesAndNameVideo.getNameVideo());
-        model.addAttribute("photoId", usersAccountRepository.findByLogin(accountName).getPhotoId());
+        model.addAttribute("nameVideo", idVideo);
+        model.addAttribute("photoId", usersAccountRepository.findByUserName(userName).getPhotoId());
 
         if (idVideo.endsWith(".mp4") || idVideo.endsWith(".avi")) {
             model.addAttribute("type", "video");
@@ -44,9 +44,10 @@ public class viewVideo {
         return "viewVideo";
     }
 
-    @PostMapping("/@{accountName}/video/{idVideo}")
-    public String addLike(@RequestParam String login, @RequestParam String password, @PathVariable("accountName") String accountName, @PathVariable("idVideo") String idVideo, Model model){
-        Videos videoLikesAndNameVideo = videosRepository.findByNameAccountAndCodeVideo(accountName, idVideo);
+    @PostMapping("/@{userName}/video/{idVideo}")
+    public String addLike(@RequestParam String login, @RequestParam String password, @PathVariable("userName") String userName, @PathVariable("idVideo") String idVideo, Model model){
+        Videos videoLikesAndNameVideo = videosRepository.findByUserNameAndCodeVideo(userName, idVideo);
+        UsersAccount user = usersAccountRepository.findByUserName(userName);
 
         if (idVideo.endsWith(".mp4") || idVideo.endsWith(".avi")) {
             model.addAttribute("type", "video");
@@ -55,20 +56,19 @@ public class viewVideo {
         }else{
             model.addAttribute("type", "img");
         }
-        model.addAttribute("accountName", accountName);
-        model.addAttribute("userName", usersAccountRepository.findByLogin(accountName).getUserName());
+        model.addAttribute("userName", userName);
         model.addAttribute("idVideo", idVideo);
         model.addAttribute("like", videoLikesAndNameVideo.getLikes());
         model.addAttribute("nameVideo", videoLikesAndNameVideo.getNameVideo());
-        model.addAttribute("photoId", usersAccountRepository.findByLogin(accountName).getPhotoId());
+        model.addAttribute("photoId", user.getPhotoId());
 
-        if (usersAccountRepository.findByLoginAndPassword(login, getHashCode(password)) != null){
-            if (likesRepository.findByAccountIdAndNameAccountLikesVideoAndIdVideo(login, accountName, idVideo) == null){
+        if (usersAccountRepository.findByLoginAndPasswordAndUserName(login, getHashCode(password), userName) != null){
+            if (likesRepository.findByAccountIdAndNameAccountLikesVideoAndIdVideo(login, userName, idVideo) == null){
                 model.addAttribute("message", "Successful");
 
-                Likes addLike = new Likes(accountName, idVideo, login, videoLikesAndNameVideo.getNameVideo());
+                Likes addLike = new Likes(userName, idVideo, login, videoLikesAndNameVideo.getNameVideo());
                 likesRepository.save(addLike);
-                Videos video = videosRepository.findByNameAccountAndCodeVideo(accountName, idVideo);
+                Videos video = videosRepository.findByUserNameAndCodeVideo(userName, idVideo);
                 video.setLikes(video.getLikes() + 1);
                 videosRepository.save(video);
             }

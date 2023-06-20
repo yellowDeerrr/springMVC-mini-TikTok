@@ -38,8 +38,8 @@ public class CreateNewVideoController {
     }
 
     @PostMapping("/createNewVideo")
-    public String createVideo(@RequestParam String login, @RequestParam String password, @RequestParam String nameVideo, @RequestParam MultipartFile file, Model model){
-        UsersAccount usersAccount = usersAccountRepository.findByLoginAndPassword(login, getHashCode(password));
+    public String createVideo(@RequestParam String login, @RequestParam String password, @RequestParam String userName, @RequestParam String nameVideo, @RequestParam MultipartFile file, Model model){
+        UsersAccount usersAccount = usersAccountRepository.findByLoginAndPasswordAndUserName(login, getHashCode(password), userName);
         if (usersAccount == null){
             model.addAttribute("message", "Error account");
         }
@@ -53,7 +53,7 @@ public class CreateNewVideoController {
                     String fileExtension = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
                     String idVideoWithExtension = idVideo + "." + fileExtension;
 
-                    Path path = Paths.get("F:\\Java\\intellji\\spring\\projects\\tiktok\\src\\main\\resources\\templates\\images\\@" + usersAccount.getLogin() + "\\video\\" + idVideoWithExtension);
+                    Path path = Paths.get("F:\\Java\\intellji\\spring\\projects\\tiktok\\src\\main\\resources\\templates\\images\\@" + userName + "\\video\\" + idVideoWithExtension);
                     Files.createDirectories(path.getParent());
                     Files.write(path, bytes);
 
