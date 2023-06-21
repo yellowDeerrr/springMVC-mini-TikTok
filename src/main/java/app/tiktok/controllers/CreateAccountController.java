@@ -30,7 +30,7 @@ public class CreateAccountController {
     }
 
     @PostMapping("/createAccount")
-    public String createAccount(@RequestParam String login, @RequestParam String password, @RequestParam String userName, @RequestParam String operator, @RequestParam MultipartFile file, Model model) throws IOException {
+    public String createAccount(@RequestParam String login, @RequestParam String password, @RequestParam String userName, @RequestParam String operatorVideos, @RequestParam String operatorLikes, @RequestParam MultipartFile file, Model model) throws IOException {
         if (usersAccountRepository.findByLogin(login) == null){
             if (usersAccountRepository.findByUserName(userName) == null){
 
@@ -49,13 +49,13 @@ public class CreateAccountController {
                         Files.createDirectories(path.getParent());
                         Files.write(path, bytes);
 
-                        UsersAccount createUser = new UsersAccount(login, getHashCode(password), userName, new Timestamp(System.currentTimeMillis()), idVideoWithExtension, operator.equals("close"));
+                        UsersAccount createUser = new UsersAccount(login, getHashCode(password), userName, new Timestamp(System.currentTimeMillis()), idVideoWithExtension, operatorVideos.equals("close"), operatorLikes.equals("close"));
                         usersAccountRepository.save(createUser);
                     }else{
                         model.addAttribute("message", "Add photo");
                     }
                 }else{
-                    createAccount(login, password, userName, operator, file, model);
+                    createAccount(login, password, userName, operatorVideos, operatorLikes, file, model);
                 }
             }else{
                 model.addAttribute("message", "User name must be unique");

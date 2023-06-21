@@ -18,19 +18,22 @@ public class UsersAccount {
     private Timestamp registryTime;
     @Column(name = "photo_id")
     private String photoId;
-    @Column(name = "close_or_open_account")
-    private boolean closeOrOpenAccount;
+    @Column(name = "close_or_open_account_videos")
+    private boolean closeOrOpenAccountVideo;
+    @Column(name = "close_or_open_account_likes")
+    private boolean closeOrOpenAccountLikes;
 
     public UsersAccount() {
     }
 
-    public UsersAccount(String login, String password, String userName, Timestamp registryTime, String photoId, boolean closeOrOpenAccount) {
+    public UsersAccount(String login, String password, String userName, Timestamp registryTime, String photoId, boolean closeOrOpenAccountVideo, boolean closeOrOpenAccountLikes) {
         this.login = login;
         this.password = password;
         this.userName = userName;
         this.registryTime = registryTime;
         this.photoId = photoId;
-        this.closeOrOpenAccount = closeOrOpenAccount;
+        this.closeOrOpenAccountVideo = closeOrOpenAccountVideo;
+        this.closeOrOpenAccountLikes = closeOrOpenAccountLikes;
     }
 
     public int getId() {
@@ -81,11 +84,19 @@ public class UsersAccount {
         this.photoId = photoId;
     }
 
-    public boolean isCloseOrOpenAccount() {
-        return closeOrOpenAccount;
+    public boolean isCloseOrOpenAccountVideo() {
+        return closeOrOpenAccountVideo;
     }
 
-    public void setCloseOrOpenAccount(boolean closeOrOpenAccount) {
-        this.closeOrOpenAccount = closeOrOpenAccount;
+    public void setCloseOrOpenAccountVideo(boolean closeOrOpenAccountVideo) {
+        this.closeOrOpenAccountVideo = closeOrOpenAccountVideo;
+    }
+
+    public boolean isCloseOrOpenAccountLikes() {
+        return closeOrOpenAccountLikes;
+    }
+
+    public void setCloseOrOpenAccountLikes(boolean closeOrOpenAccountLikes) {
+        this.closeOrOpenAccountLikes = closeOrOpenAccountLikes;
     }
 }

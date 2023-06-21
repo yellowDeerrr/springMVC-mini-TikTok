@@ -18,7 +18,7 @@ public class viewLikes extends viewProfileController{
             UsersAccount usersAccount = usersAccountRepository.findByLogin(accountName);
             model.addAttribute("accountId", accountName);
             model.addAttribute("photoId", usersAccount.getPhotoId());
-            if (!usersAccount.isCloseOrOpenAccount()){
+            if (!usersAccount.isCloseOrOpenAccountLikes()){
                 if (likes.isEmpty()){
                     model.addAttribute("errorMessage", "Account hasn't likes");
                 }else{

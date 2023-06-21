@@ -43,7 +43,7 @@
 </form>
 <div class="thumb">
     <img th:src="@{'http://localhost:8080/tiktok/@' + ${userName} + '/photo/' + ${photoId}}" id="t">
-    <h2>Video's <span th:text="${userName}"></span><</h2>
+    <h2>Video's <span th:text="${userName}"></span></h2>
     <figure th:each="video : ${videos}">
         <a th:href="@{'/@' + ${video.userName} + '/video/' + ${video.codeVideo}}">
             <img th:src="@{'http://localhost:8080/tiktok/@' + ${video.userName} + '/video/' + ${video.codeVideo}}" alt="Video didn't load">

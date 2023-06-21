@@ -3,7 +3,6 @@ package app.tiktok.controllers.viewProfile;
 import app.tiktok.repositores.LikesRepository;
 import app.tiktok.repositores.UsersAccountRepository;
 import app.tiktok.repositores.VideosRepository;
-import app.tiktok.tables.Likes;
 import app.tiktok.tables.UsersAccount;
 import app.tiktok.tables.Videos;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +31,7 @@ public class viewProfileController {
 
             model.addAttribute("userName", userName);
             model.addAttribute("photoId", usersAccount.getPhotoId());
-            if (!usersAccount.isCloseOrOpenAccount()){
+            if (!usersAccount.isCloseOrOpenAccountVideo()){
                 if (videos.isEmpty()){
                     model.addAttribute("errorMessage", "Account hasn't videos");
                 }else{

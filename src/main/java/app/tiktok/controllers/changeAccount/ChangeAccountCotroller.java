@@ -1,6 +1,5 @@
 package app.tiktok.controllers.changeAccount;
 
-import app.tiktok.SHA256;
 import app.tiktok.repositores.UsersAccountRepository;
 import app.tiktok.tables.UsersAccount;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,28 +97,28 @@ public class ChangeAccountCotroller {
         return "changeAccount/avatar";
     }
 
-    @GetMapping("/changeAccount/state")
-    public String getPageState(Model model){
+    @GetMapping("/changeAccount/stateVideos")
+    public String getPageStateVideos(Model model){
         if (account == null){return "error";}
 
-        if (!account.isCloseOrOpenAccount()){
+        if (!account.isCloseOrOpenAccountVideo()){
             model.addAttribute("state", "open");
-        }else if(account.isCloseOrOpenAccount()){
+        }else if(account.isCloseOrOpenAccountVideo()){
             model.addAttribute("state", "close");
         }else{
             return "error";
         }
-        return "changeAccount/state";
+        return "changeAccount/stateVideos";
     }
 
-    @PostMapping("/changeAccount/state")
-    public String state(@RequestParam String newState, Model model){
+    @PostMapping("/changeAccount/stateVideos")
+    public String stateVideos(@RequestParam String newState, Model model){
         if (account == null){return "error";}
 
         if (newState.equals("close")){
-            account.setCloseOrOpenAccount(true);
+            account.setCloseOrOpenAccountVideo(true);
         }else if (newState.equals("open")){
-            account.setCloseOrOpenAccount(false);
+            account.setCloseOrOpenAccountVideo(false);
         }else{
             model.addAttribute("message", "Choose");
         }
@@ -127,7 +126,39 @@ public class ChangeAccountCotroller {
         usersAccountRepository.save(account);
         model.addAttribute("message", "Successful");
         model.addAttribute("state", newState);
-        return "changeAccount/state";
+        return "changeAccount/stateVideos";
+    }
+
+    @GetMapping("/changeAccount/stateLikes")
+    public String getPageStateLikes(Model model){
+        if (account == null){return "error";}
+
+        if (!account.isCloseOrOpenAccountLikes()){
+            model.addAttribute("state", "open");
+        }else if(account.isCloseOrOpenAccountLikes()){
+            model.addAttribute("state", "close");
+        }else{
+            return "error";
+        }
+        return "changeAccount/stateLikes";
+    }
+
+    @PostMapping("/changeAccount/stateLikes")
+    public String stateLikes(@RequestParam String newState, Model model){
+        if (account == null){return "error";}
+
+        if (newState.equals("close")){
+            account.setCloseOrOpenAccountLikes(true);
+        }else if (newState.equals("open")){
+            account.setCloseOrOpenAccountLikes(false);
+        }else{
+            model.addAttribute("message", "Choose");
+        }
+
+        usersAccountRepository.save(account);
+        model.addAttribute("message", "Successful");
+        model.addAttribute("state", newState);
+        return "changeAccount/stateLikes";
     }
 
     @GetMapping("/changeAccount/login")
