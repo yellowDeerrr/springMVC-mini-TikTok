@@ -75,6 +75,13 @@
     <button type="submit">Like</button>
 </form>
 
+<form method="post" th:action="@{'/@' + ${userName} + '/' + ${idVideo}}">
+    <h2>If you want to like</h2>
+    <input type="text" name="login" placeholder="Enter Login">
+    <input type="password" name="password" placeholder="Enter Password">
+    <button type="submit">Like</button>
+</form>
+
 <form method="get" th:action="@{'/@' + ${userName}}">
     <button type="submit">View Profile</button>
 </form>
